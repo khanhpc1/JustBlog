@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace JustBlog.Core.Migrations
 {
     [DbContext(typeof(JustBlogDbContext))]
-    [Migration("20211104091433_createInitialData")]
-    partial class createInitialData
+    [Migration("20211107100219_CreateData")]
+    partial class CreateData
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -35,83 +35,13 @@ namespace JustBlog.Core.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UrlSlug")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Categories");
+                    b.HasIndex("UrlSlug");
 
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Description = "Description1",
-                            Name = "Category 1",
-                            UrlSlug = "http://sample1.com"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Description = "Description2",
-                            Name = "Category 2",
-                            UrlSlug = "http://sample2.com"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Description = "Description3",
-                            Name = "Category 3",
-                            UrlSlug = "http://sample3.com"
-                        },
-                        new
-                        {
-                            Id = 4,
-                            Description = "Description4",
-                            Name = "Category 4",
-                            UrlSlug = "http://sample4.com"
-                        },
-                        new
-                        {
-                            Id = 5,
-                            Description = "Description5",
-                            Name = "Category 5",
-                            UrlSlug = "http://sample5.com"
-                        },
-                        new
-                        {
-                            Id = 6,
-                            Description = "Description6",
-                            Name = "Category 6",
-                            UrlSlug = "http://sample6.com"
-                        },
-                        new
-                        {
-                            Id = 7,
-                            Description = "Description7",
-                            Name = "Category 7",
-                            UrlSlug = "http://sample7.com"
-                        },
-                        new
-                        {
-                            Id = 8,
-                            Description = "Description8",
-                            Name = "Category 8",
-                            UrlSlug = "http://sample8.com"
-                        },
-                        new
-                        {
-                            Id = 9,
-                            Description = "Description9",
-                            Name = "Category 9",
-                            UrlSlug = "http://sample9.com"
-                        },
-                        new
-                        {
-                            Id = 10,
-                            Description = "Description10",
-                            Name = "Category 10",
-                            UrlSlug = "http://sample20.com"
-                        });
+                    b.ToTable("Categories");
                 });
 
             modelBuilder.Entity("JustBlog.Models.Entities.Post", b =>
@@ -150,118 +80,6 @@ namespace JustBlog.Core.Migrations
                     b.HasIndex("CategoryId");
 
                     b.ToTable("Posts");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Modified = new DateTime(2020, 2, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            PostContent = "Content1",
-                            PostedOn = new DateTime(2020, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Published = true,
-                            ShortDescription = "short 1",
-                            Title = " Post 1",
-                            UrlSlug = "Post 1 UrlSlug"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Modified = new DateTime(2020, 2, 2, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            PostContent = "Content2",
-                            PostedOn = new DateTime(2020, 1, 2, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Published = true,
-                            ShortDescription = "short 2",
-                            Title = " Post 2",
-                            UrlSlug = "Post 2 UrlSlug"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Modified = new DateTime(2020, 2, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            PostContent = "Content3",
-                            PostedOn = new DateTime(2020, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Published = true,
-                            ShortDescription = "short 3",
-                            Title = " Post 3",
-                            UrlSlug = "Post 3 UrlSlug"
-                        },
-                        new
-                        {
-                            Id = 4,
-                            Modified = new DateTime(2020, 2, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            PostContent = "Content4",
-                            PostedOn = new DateTime(2020, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Published = true,
-                            ShortDescription = "short 4",
-                            Title = " Post 4",
-                            UrlSlug = "Post 4 UrlSlug"
-                        },
-                        new
-                        {
-                            Id = 5,
-                            Modified = new DateTime(2020, 2, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            PostContent = "Content5",
-                            PostedOn = new DateTime(2020, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Published = true,
-                            ShortDescription = "short 5",
-                            Title = " Post 5",
-                            UrlSlug = "Post 5 UrlSlug"
-                        },
-                        new
-                        {
-                            Id = 6,
-                            Modified = new DateTime(2020, 2, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            PostContent = "Content6",
-                            PostedOn = new DateTime(2020, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Published = true,
-                            ShortDescription = "short 6",
-                            Title = " Post 6",
-                            UrlSlug = "Post 6 UrlSlug"
-                        },
-                        new
-                        {
-                            Id = 7,
-                            Modified = new DateTime(2020, 2, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            PostContent = "Content7",
-                            PostedOn = new DateTime(2020, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Published = true,
-                            ShortDescription = "short 7",
-                            Title = " Post 7",
-                            UrlSlug = "Post 7 UrlSlug"
-                        },
-                        new
-                        {
-                            Id = 8,
-                            Modified = new DateTime(2020, 2, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            PostContent = "Content8",
-                            PostedOn = new DateTime(2020, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Published = true,
-                            ShortDescription = "short 8",
-                            Title = " Post 8",
-                            UrlSlug = "Post 8 UrlSlug"
-                        },
-                        new
-                        {
-                            Id = 9,
-                            Modified = new DateTime(2020, 2, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            PostContent = "Content9",
-                            PostedOn = new DateTime(2020, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Published = true,
-                            ShortDescription = "short 9",
-                            Title = " Post 9",
-                            UrlSlug = "Post 9 UrlSlug"
-                        },
-                        new
-                        {
-                            Id = 10,
-                            Modified = new DateTime(2020, 2, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            PostContent = "Content10",
-                            PostedOn = new DateTime(2020, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Published = true,
-                            ShortDescription = "short 10",
-                            Title = " Post 10",
-                            UrlSlug = "Post 10 UrlSlug"
-                        });
                 });
 
             modelBuilder.Entity("JustBlog.Models.Entities.PostTagMap", b =>
@@ -301,78 +119,6 @@ namespace JustBlog.Core.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Tags");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Count = 1,
-                            Name = "Tag 1",
-                            UrlSlug = "http: tag1.com"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Count = 2,
-                            Name = "Tag 2",
-                            UrlSlug = "http: tag2.com"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Count = 3,
-                            Name = "Tag 3",
-                            UrlSlug = "http: tag3.com"
-                        },
-                        new
-                        {
-                            Id = 4,
-                            Count = 4,
-                            Name = "Tag 4",
-                            UrlSlug = "http: tag4.com"
-                        },
-                        new
-                        {
-                            Id = 5,
-                            Count = 5,
-                            Name = "Tag 5",
-                            UrlSlug = "http: tag5.com"
-                        },
-                        new
-                        {
-                            Id = 6,
-                            Count = 6,
-                            Name = "Tag 6",
-                            UrlSlug = "http: tag6.com"
-                        },
-                        new
-                        {
-                            Id = 7,
-                            Count = 7,
-                            Name = "Tag 7",
-                            UrlSlug = "http: tag7.com"
-                        },
-                        new
-                        {
-                            Id = 8,
-                            Count = 8,
-                            Name = "Tag 8",
-                            UrlSlug = "http: tag8.com"
-                        },
-                        new
-                        {
-                            Id = 9,
-                            Count = 9,
-                            Name = "Tag 9",
-                            UrlSlug = "http: tag9.com"
-                        },
-                        new
-                        {
-                            Id = 10,
-                            Count = 10,
-                            Name = "Tag 10",
-                            UrlSlug = "http: tag10.com"
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -399,7 +145,7 @@ namespace JustBlog.Core.Migrations
                         .HasDatabaseName("RoleNameIndex")
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
-                    b.ToTable("AspNetRoles");
+                    b.ToTable("Roles");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -423,7 +169,7 @@ namespace JustBlog.Core.Migrations
 
                     b.HasIndex("RoleId");
 
-                    b.ToTable("AspNetRoleClaims");
+                    b.ToTable("RoleClaims");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUser", b =>
@@ -488,7 +234,7 @@ namespace JustBlog.Core.Migrations
                         .HasDatabaseName("UserNameIndex")
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
-                    b.ToTable("AspNetUsers");
+                    b.ToTable("Users");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
@@ -512,7 +258,7 @@ namespace JustBlog.Core.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("AspNetUserClaims");
+                    b.ToTable("UserClaims");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
@@ -536,7 +282,7 @@ namespace JustBlog.Core.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("AspNetUserLogins");
+                    b.ToTable("UserLogins");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
@@ -551,7 +297,7 @@ namespace JustBlog.Core.Migrations
 
                     b.HasIndex("RoleId");
 
-                    b.ToTable("AspNetUserRoles");
+                    b.ToTable("UserRoles");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
@@ -572,7 +318,7 @@ namespace JustBlog.Core.Migrations
 
                     b.HasKey("UserId", "LoginProvider", "Name");
 
-                    b.ToTable("AspNetUserTokens");
+                    b.ToTable("UserTokens");
                 });
 
             modelBuilder.Entity("JustBlog.Models.Entities.Post", b =>
