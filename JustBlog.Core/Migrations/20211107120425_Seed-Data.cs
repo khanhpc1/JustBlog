@@ -5,7 +5,7 @@ using System;
 
 namespace JustBlog.Core.Migrations
 {
-    public partial class Seeddata : Migration
+    public partial class SeedData : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -23,8 +23,8 @@ namespace JustBlog.Core.Migrations
             var postFaker = new Faker<Post>()
                 .RuleFor(p => p.Id, f => f.IndexVariable++)
                 .RuleFor(p => p.Title, f => f.Lorem.Sentence(5, 5))
-                .RuleFor(p => p.ShortDescription, f => f.Lorem.Paragraph(20))
-                .RuleFor(p => p.PostContent, f => f.Lorem.Paragraphs(1, 4))
+                .RuleFor(p => p.ShortDescription, f => f.Lorem.Paragraph(2))
+                .RuleFor(p => p.PostContent, f => f.Lorem.Paragraphs(4, 6, "\n\n"))
                 .RuleFor(p => p.UrlSlug, f => f.Internet.Url())
                 .RuleFor(p => p.PostedOn, f => f.Date.Between(new DateTime(2021, 1, 1), new DateTime(2021, 11, 1)))
                 .RuleFor(p => p.Published, f => f.Random.Bool())
@@ -84,8 +84,6 @@ namespace JustBlog.Core.Migrations
                     }
                     );
             }
-
-
 
         }
 

@@ -1,9 +1,11 @@
 ﻿using JustBlog.Core.Contracts;
 using JustBlog.Models.Entities;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Query;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -46,19 +48,35 @@ namespace JustBlog.Core.Repositories
 
         public async Task<Post> Find(int id)
         {
-            var post = await _db.Posts.FindAsync(id);
+            var post = await _db.Posts
+                .Include(q => q.Category)
+                .Include(q => q.PostTagMaps)
+                .FirstOrDefaultAsync(p => p.Id == id);
             return post;
         }
 
-        public Task<Post> FindPost(int year, int month, string urlSlug)
+        public async Task<Post> FindPost(int year, int month, string urlSlug)
         {
-            throw new NotImplementedException();
+            var posts = await GetAll();
+            return (Post)posts.Where(q => q.PostedOn.Year == year && q.PostedOn.Month == month && q.UrlSlug == urlSlug);           
         }
 
         public async Task<ICollection<Post>> GetAll()
         {
-            var categories = await _db.Posts.ToListAsync();
-            return categories;
+            var posts = await _db.Posts
+                .Include(q => q.Category)
+                .Include(q => q.PostTagMaps)
+                .ToListAsync();
+            return posts;
+        }
+
+        public async Task<ICollection<Post>> GetAll(Expression<Func<Post, bool>> expression = null, Func<IQueryable<Post>, IOrderedQueryable<Post>> orderBy = null, Func<IQueryable<Post>, IIncludableQueryable<Post, object>> includes = null)
+        {
+            var posts = await _db.Posts
+                 .Include(q => q.Category)
+                 .Include(q => q.PostTagMaps)
+                 .ToListAsync();
+            return posts;
         }
 
         public async Task<Post> GetById(int id)
@@ -67,9 +85,17 @@ namespace JustBlog.Core.Repositories
             return post;
         }
 
-        public Task<ICollection<Post>> GetLatestPost(int size)
+        public async Task<ICollection<Post>> GetLatestPost(int size)
         {
-            throw new NotImplementedException();
+            var posts = await GetAll();
+            return posts.OrderByDescending(p => p.PostedOn).Take(size).ToList();
+        }
+
+        public async Task<ICollection<Post>> GetPostsByCategory(int categoryId)
+        {
+            var posts = await GetAll();
+            return posts.Where(q => q.CategoryId == categoryId)
+                       .ToList();
         }
 
         public Task<ICollection<Post>> GetPostsByCategory(string category)
@@ -77,9 +103,18 @@ namespace JustBlog.Core.Repositories
             throw new NotImplementedException();
         }
 
-        public Task<ICollection<Post>> GetPostsByMonth(DateTime monthYear)
+        public async Task<ICollection<Post>> GetPostsByMonth(DateTime monthYear)
         {
-            throw new NotImplementedException();
+            var posts = await GetAll();
+            return posts.Where(q => q.PostedOn.Month == monthYear.Month)
+                       .ToList();
+        }
+
+        public async Task<ICollection<Post>> GetPostsByTag(Tag tag)
+        {
+            var posts = await GetAll();
+            return posts.Where(q => q.PostTagMaps == tag.PostTagMaps)
+                       .ToList();
         }
 
         public Task<ICollection<Post>> GetPostsByTag(string tag)
@@ -87,14 +122,18 @@ namespace JustBlog.Core.Repositories
             throw new NotImplementedException();
         }
 
-        public Task<ICollection<Post>> GetPublisedPosts()
+        public async Task<ICollection<Post>> GetPublisedPosts()
         {
-            throw new NotImplementedException();
+            var posts = await GetAll();
+            return posts.Where(q => q.Published == true)
+                       .ToList();
         }
 
-        public Task<ICollection<Post>> GetUnpublisedPosts()
+        public async Task<ICollection<Post>> GetUnpublisedPosts()
         {
-            throw new NotImplementedException();
+            var posts = await GetAll();
+            return posts.Where(q => q.Published == false)
+                       .ToList();
         }
 
         public async Task<bool> IsExists(int id)

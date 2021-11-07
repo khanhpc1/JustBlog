@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace JustBlog.Core.Migrations
 {
     [DbContext(typeof(JustBlogDbContext))]
-    [Migration("20211107112401_Seed-data")]
-    partial class Seeddata
+    [Migration("20211107120425_Seed-Data")]
+    partial class SeedData
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
