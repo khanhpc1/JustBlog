@@ -1,0 +1,49 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+    <UserSecretsId>aspnet-JustBlog.WebApp-18688444-96D8-4CBE-8AB6-F8072F81B7BF</UserSecretsId>
+    <CopyRefAssembliesToPublishDirectory>false</CopyRefAssembliesToPublishDirectory>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="10.1.1" />
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.1.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="5.0.11" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="5.0.11" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="5.0.11" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="5.0.11" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.11" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="5.0.11" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="5.0.11" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="5.0.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\JustBlog.Core\JustBlog.Core.csproj" />
+    <ProjectReference Include="..\JustBlog.Models\JustBlog.Models.csproj" />
+    <ProjectReference Include="..\JustBlog.ViewModels\JustBlog.ViewModels.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Areas\" />
+    <Folder Include="Data\Migrations\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\summernote\.github\CODE_OF_CONDUCT.md" />
+    <None Include="wwwroot\summernote\.github\CONTRIBUTING.md" />
+    <None Include="wwwroot\summernote\.github\FUNDING.yml" />
+    <None Include="wwwroot\summernote\.github\ISSUE_TEMPLATE.md" />
+    <None Include="wwwroot\summernote\.github\PULL_REQUEST_TEMPLATE.md" />
+    <None Include="wwwroot\summernote\.github\workflows\codeql-analysis.yml" />
+    <None Include="wwwroot\summernote\.husky\.gitignore" />
+    <None Include="wwwroot\summernote\.husky\pre-commit" />
+    <None Include="wwwroot\summernote\.husky\pre-push" />
+    <None Include="wwwroot\summernote\.karma\config.js" />
+    <None Include="wwwroot\summernote\.karma\debug.js" />
+    <None Include="wwwroot\summernote\.karma\saucelabs.js" />
+    <None Include="wwwroot\summernote\.karma\travis.js" />
+  </ItemGroup>
+
+</Project>

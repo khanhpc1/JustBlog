@@ -1,0 +1,13 @@
+﻿- DbContextOptions: carries all required configuration option such as the connect string, database provider.
+- DbSet class represents an entity set that can be used for create, read, update, and delete operations
+  The context class(derived from DbContext ) must include the DbSet type properties for the entities which map 
+  to database tables and view
+
+*Configure
+-  ModelBuilder: is the class which responsible for building the model
+   ModelBilder builds the initial model from the entity classes that have DbSet Property in the context class.
+   It then uses convention to create primary key, foreign key, relationships etc,
+   
+- OnModelCreating: before freezing the model, it calls the OnModelCreating method and passes the instance of 
+  the ModelBuilder to it
+

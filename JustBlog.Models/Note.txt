@@ -1,0 +1,11 @@
+﻿- Create entity: post, tag, category.
+- post-tag has a many-many relationship.
+	 many-many relationships required a collecion navigation property on the both side.
+- post- category has a one-many relationship
+
+Note:- Navigation property: A property defined on the principal and/or dependent entity that references the related entity.
+			+ Collection navigation property: A navigation property that contains references to many related entities.
+			+ Reference navigation property: A navigation property that holds a reference to a single related entity.
+			+ Inverse navigation property: When discussing a particular navigation property, this term refers to the navigation property on the other end of the relationship.
+	
+	- Self-referencing relationship: A relationship in which the dependent and the principal entity types are the same.
