@@ -19,14 +19,14 @@ namespace JustBlog.Core.Migrations
                 .RuleFor(p => p.Description, f => f.Lorem.Paragraph(20))
                 .RuleFor(p => p.UrlSlug, f => f.Internet.Url());
 
-
             var postFaker = new Faker<Post>()
                 .RuleFor(p => p.Id, f => f.IndexVariable++)
                 .RuleFor(p => p.Title, f => f.Lorem.Sentence(5, 5))
-                .RuleFor(p => p.ShortDescription, f => f.Lorem.Paragraph(2))
+                .RuleFor(p => p.ShortDescription, f => f.Lorem.Paragraph(3))
                 .RuleFor(p => p.PostContent, f => f.Lorem.Paragraphs(4, 6, "\n\n"))
                 .RuleFor(p => p.UrlSlug, f => f.Internet.Url())
                 .RuleFor(p => p.PostedOn, f => f.Date.Between(new DateTime(2021, 1, 1), new DateTime(2021, 11, 1)))
+                .RuleFor(p => p.Modified, f => f.Date.Between(new DateTime(2021, 1, 1), new DateTime(2021, 11, 1)))
                 .RuleFor(p => p.Published, f => f.Random.Bool())
                 .RuleFor(p => p.CategoryId, f => f.Random.Int(1, 5))
                 ;
@@ -37,7 +37,6 @@ namespace JustBlog.Core.Migrations
                .RuleFor(p => p.Description, f => f.Lorem.Paragraph(20))
                .RuleFor(p => p.UrlSlug, f => f.Internet.Url())
                .RuleFor(p => p.Count, f => f.Random.Int());
-
 
             for (int i = 0; i < 21; i++)
             {
@@ -51,13 +50,12 @@ namespace JustBlog.Core.Migrations
                       category.Name,
                       category.UrlSlug,
                       category.Description,
-
                   });
 
                 Post post = postFaker.Generate();
                 migrationBuilder.InsertData(
                   table: "Posts",
-                  columns: new[] { "Id", "Title", "UrlSlug", "ShortDescription", "PostContent", "PostedOn", "Published", "CategoryId" },
+                  columns: new[] { "Id", "Title", "UrlSlug", "ShortDescription", "PostContent", "PostedOn", "Modified", "Published", "CategoryId" },
                   values: new object[]
                   {
                       post.Id,
@@ -66,8 +64,9 @@ namespace JustBlog.Core.Migrations
                       post.ShortDescription,
                       post.PostContent,
                       post.PostedOn,
+                      post.Modified,
                       post.Published,
-                      post.Category
+                      post.CategoryId
                   });
 
                 Tag tag = tagFaker.Generate();
@@ -84,12 +83,10 @@ namespace JustBlog.Core.Migrations
                     }
                     );
             }
-
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-
         }
     }
 }

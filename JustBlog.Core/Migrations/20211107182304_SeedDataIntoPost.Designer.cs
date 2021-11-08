@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace JustBlog.Core.Migrations
 {
     [DbContext(typeof(JustBlogDbContext))]
-    [Migration("20211107120425_Seed-Data")]
-    partial class SeedData
+    [Migration("20211107182304_SeedDataIntoPost")]
+    partial class SeedDataIntoPost
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -51,10 +51,10 @@ namespace JustBlog.Core.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("CategoryId")
+                    b.Property<int>("CategoryId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime?>("Modified")
+                    b.Property<DateTime>("Modified")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("PostContent")
@@ -325,7 +325,9 @@ namespace JustBlog.Core.Migrations
                 {
                     b.HasOne("JustBlog.Models.Entities.Category", "Category")
                         .WithMany("Posts")
-                        .HasForeignKey("CategoryId");
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Category");
                 });

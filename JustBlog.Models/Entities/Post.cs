@@ -16,9 +16,9 @@ namespace JustBlog.Models.Entities
         public string PostContent { get; set; }
         public bool Published { get; set; }
         public DateTime PostedOn { get; set; }
-        public DateTime? Modified { get; set; }
+        public DateTime Modified { get; set; }
 
-        public int? CategoryId { get; set; }   
+        public int CategoryId { get; set; }   
         public Category Category { get; set; }
 
         public ICollection<PostTagMap> PostTagMaps { get; set; }

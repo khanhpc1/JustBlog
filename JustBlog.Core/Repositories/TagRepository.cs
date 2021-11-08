@@ -1,8 +1,11 @@
 ﻿using JustBlog.Core.Contracts;
 using JustBlog.Models.Entities;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Query;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace JustBlog.Core.Repositories
@@ -43,6 +46,11 @@ namespace JustBlog.Core.Repositories
         {
             var categories = await _db.Tags.ToListAsync();
             return categories;
+        }
+
+        public Task<ICollection<Tag>> GetAll(Expression<Func<Tag, bool>> expression = null, Func<IQueryable<Tag>, IOrderedQueryable<Tag>> orderBy = null, Func<IQueryable<Tag>, IIncludableQueryable<Tag, object>> includes = null)
+        {
+            throw new NotImplementedException();
         }
 
         public async Task<Tag> GetById(int id)
