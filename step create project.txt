@@ -1,0 +1,66 @@
+step 1: create libraries of JustBlog.Models, JustBlog.core, JustBlog.Web 
+
+step 2: in JustBlog.Models create entities: category, Post, Tag, PostTagMap.
+
+step 3: in JustBlog.Core
+  Create JustBlogDbContext
+
+step 4: - register the JustBlogDbContext in startup.cs(in method ConfigureService)
+  Register justBlogDbContext as a service to controller class can use it 
+  - add connectionstring in appsetting.json
+
+step 5: - Add database exception filter to ConfifureServices 
+ AddDatabaseDeverloperPageExceptionFilter provider helpful error information in the development enviroment.4
+  note : install Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore package. this package provides  a middleWare 
+  for EF core error page to help detect and diagnose errors witgh migration.
+
+step 6: in JustBlofDbContext class 
+  create many-many, one-many relationship
+  - add migration
+  note: before add migration remember set as startup project to justblog.web
+        and add base.OnModelCreating(modelBuilder); in OnModelCreating method
+
+step 7: create Dbinitializer class in Datafolder 
+
+step 8: create repositiy anf unit of work pattern
+ repository and unit of work pattern  are intern to create an abstraction layer between the data access layer and
+the business layer of an application.
+
+- repository :Mediates between the domain and data mapping layers using a collection-like interface for accessing domain objects.
+
+benifit: when using these pattern: help insulate your application from changes in store database and can facilitate
+ automated unit testing or TDD
+
+  1. Create IGenericRepository
+  note : IEnumable: 
+  - The code Expression<Func<TEntity, bool>> filter means the caller will provide a lambda expression 
+  based on the TEntity type, and this expression will return a Boolean value. 
+  For example, if the repository is instantiated for the Student entity type, the code in the calling method
+  might specify student => student.LastName == "Smith" for the filter parameter.
+
+- The code Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy also means the caller will provide a
+lambda expression. But in this case, the input to the expression is an IQueryable object for the TEntity type.
+The expression will return an ordered version of that IQueryable object. For example, if the repository is
+instantiated for the Student entity type, the code in the calling method might specify 
+q => q.OrderBy(s => s.LastName) for the orderBy parameter.
+ 2. Create Generic repository
+
+ 3. create repository, IRepository
+ 5. create unitofwork
+
+step 9: Create viewmodel
+
+step 10: create mappings
+
+  1. create maps class
+  2. resgister services
+      services.AutoMapper(typeOf(Maps));
+
+Note:
+ error: nvalidOperationException: Unable to resolve service for type 
+ 'Microsoft.AspNetCore.Identity.UI.Services.IEmailSender' while attempting to activate
+ resovle: add >addDefaultUI()
+             services.AddIdentity<AppUser, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = false)
+            .AddEntityFrameworkStores<JustBlogDbContext>()
+            .AddDefaultUI()
+            .AddDefaultTokenProviders();
