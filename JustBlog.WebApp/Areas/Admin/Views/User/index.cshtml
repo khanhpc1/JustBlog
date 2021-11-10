@@ -1,0 +1,34 @@
+@model UserListVM
+@{
+    ViewData["Title"] = "List Of user";
+}
+<h1>@ViewData["Title"]</h1>
+@*<partial name="_StatusMessage" />*@
+<p>Number of member: @Model.TotalUsers</p>
+<table class="table">
+    <tr>
+        <th>User Name</th>
+        <th>Role</th>
+        <th>Action</th>
+    </tr>
+    @foreach (var user in Model.Users)
+    {
+        <tr> 
+            <td>@user.UserName</td>
+            <td>
+                @if (string.IsNullOrEmpty(user.RoleNames))
+                {
+                    <a class="text-dark" asp-action="AddRole" asp-route-id="@user.Id">+ Add roles</a>
+                }
+                else
+                {
+                    <a asp-action="AddRole" asp-route-id="@user.Id">@user.RoleNames</a>
+                }
+            </td>
+            <td>
+                <a class="btn btn-success btn-sm" asp-action="SetPassword" asp-route-id="@user.Id">Reset Passwork</a>
+            </td>
+        </tr>
+    }
+</table>
+<partial name="_Paging" model="@ViewBag.pagingModel" />

@@ -5,6 +5,7 @@ using JustBlog.Core.Contracts;
 using JustBlog.Models.Entities;
 using JustBlog.ViewModels.EntityViewModels;
 using JustBlog.Web.Helpers;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -15,8 +16,9 @@ using System.Threading.Tasks;
 
 namespace JustBlog.Web.Areas.Blog.Controllers
 {
+    [Authorize(Roles = "Admin,Contributor")]
     [Area("Blog")]
-    [Route("admin/blog/post/[action]/{id?}")]
+    [Route("blog/post/[action]/{id?}")]
     public class PostController : Controller
     {
         private readonly JustBlogDbContext _context;

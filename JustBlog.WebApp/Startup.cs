@@ -41,7 +41,8 @@ namespace JustBlog.Web
             services.Configure<EmailSettings>(Configuration.GetSection("EmailSettings"));
             services.AddSingleton<IEmailSender, EmailSender>();
 
-            services.AddIdentity<AppUser, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = false)
+            services.AddDefaultIdentity<AppUser>()
+            .AddRoles<IdentityRole>()
             .AddEntityFrameworkStores<JustBlogDbContext>()
             .AddDefaultUI()
             .AddDefaultTokenProviders();
@@ -77,10 +78,10 @@ namespace JustBlog.Web
                 options.ExpireTimeSpan = TimeSpan.FromMinutes(30);
                 options.LoginPath = $"/login/";                                 // Url đến trang đăng nhập
                 options.LogoutPath = $"/logout/";
-                options.AccessDeniedPath = $"/Identity/Account/AccessDenied";   // Trang khi User bị cấm truy cập
+                options.AccessDeniedPath = "/AccessDenied.html";   // Trang khi User bị cấm truy cập
             });
-           
-   
+
+
             services.AddControllersWithViews();
             services.AddDatabaseDeveloperPageExceptionFilter();
         }
@@ -109,9 +110,11 @@ namespace JustBlog.Web
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllerRoute(
+               
+               endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
+
                 endpoints.MapRazorPages();
             });
         }

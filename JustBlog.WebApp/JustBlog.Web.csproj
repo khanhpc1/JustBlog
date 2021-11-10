@@ -7,10 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Areas\Admin\**" />
-    <Content Remove="Areas\Admin\**" />
-    <EmbeddedResource Remove="Areas\Admin\**" />
-    <None Remove="Areas\Admin\**" />
+    <Compile Remove="Areas\Blog\Models\**" />
+    <Content Remove="Areas\Blog\Models\**" />
+    <EmbeddedResource Remove="Areas\Blog\Models\**" />
+    <None Remove="Areas\Blog\Models\**" />
   </ItemGroup>
 
   <ItemGroup>
@@ -22,8 +22,11 @@
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="5.0.11" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="5.0.11" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="5.0.11" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="5.0.11" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="5.0.11" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="5.0.12" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="5.0.12">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="5.0.2" />
     <PackageReference Include="MimeKit" Version="2.15.1" />
   </ItemGroup>
@@ -35,8 +38,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Areas\Blog\Models\" />
-    <Folder Include="Data\Migrations\" />
+    <Folder Include="Areas\Admin\Models\" />
     <Folder Include="mailssave\" />
   </ItemGroup>
 
@@ -54,6 +56,13 @@
     <None Include="wwwroot\summernote\.karma\debug.js" />
     <None Include="wwwroot\summernote\.karma\saucelabs.js" />
     <None Include="wwwroot\summernote\.karma\travis.js" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Update="Areas\Blog\Views\Post\_ViewImports.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
   </ItemGroup>
 
 </Project>

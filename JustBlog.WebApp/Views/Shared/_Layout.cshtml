@@ -30,13 +30,15 @@
                         <a class="nav-link px-lg-3 py-3 py-lg-4"
                            asp-controller="Post" asp-action="index">Home</a>
                     </li>
-                    <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="about.html">About</a></li>
-                    <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="post.html">Entity Framework</a></li>
+                    <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4">About</a></li>
+                    <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4">Entity Framework</a></li>
                     <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="post.html">MVC</a></li>
-                    <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" asp-controller="admin/blog/post" asp-action="Index">Manage Post</a></li>
                     <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4">Contact</a></li>
+                    <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4"></a></li>
                     @await Html.PartialAsync("_LoginPartial")
+                    @await Html.PartialAsync("_MenuManagerPartial")
                 </ul>
+                
             </div>
         </div>
     </nav>

@@ -1,0 +1,30 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using JustBlog.Models.Entities
+
+@inject SignInManager<AppUser> SignInManager
+@inject UserManager<AppUser> UserManager
+
+   @* @if (SignInManager.IsSignedIn(User))
+    {
+        if (User.IsInRole("User"))
+        {*@
+            <li class="nav-item dropdown nav-link">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Manage
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                        <a class="dropdown-item text-dark"
+                           asp-area="Admin" asp-controller="Role" asp-action="Index">Roles Manager</a>
+                        <a class="dropdown-item text-dark"
+                           asp-area="Blog" asp-controller="Post" asp-action="Index">Post Manager</a>
+                        <a class="dropdown-item text-dark"
+                           asp-area="Admin" asp-controller="User" asp-action="Index">User Manager</a>
+                        <a class="dropdown-item text-dark" asp-controller="LeaveAllocation" asp-action="ListEmployees">Employees</a>
+                    </div>
+               
+            </li>
+  @*      }
+    }*@
+    @*else
+    {
+    }*@
