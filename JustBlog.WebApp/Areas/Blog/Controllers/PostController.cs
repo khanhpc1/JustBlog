@@ -38,9 +38,11 @@ namespace JustBlog.Web.Areas.Blog.Controllers
         // GET: Blog/Post
         public async Task<IActionResult> Index([FromQuery(Name = "p")] int currentPage, int pageSize)
         {
-            var posts = await _unitOfWork.Posts.GetAll();
+            var posts = await _unitOfWork.Posts.GetAll(
+                includes: q => q.Include(x => x.Category));
             var postls = _mapper.Map<List<Post>>(posts.ToList())
-                              .OrderByDescending(p => p.PostedOn);
+                                        
+                                        .OrderByDescending(p => p.PostedOn);
 
             var postsTotal = postls.Count();
             if (pageSize <= 0) pageSize = 5;
@@ -93,11 +95,10 @@ namespace JustBlog.Web.Areas.Blog.Controllers
         // GET: Blog/Post/Create
         public async Task<IActionResult> Create()
         {
-            /*var categories = await _unitOfWork.Categories.GetAll();
-            ViewData["CategoryId"] = new SelectList(categories, "Id", "Title");*/
+            var categories = await _unitOfWork.Categories.GetAll();
 
-            ViewData["CategoryId"] = new SelectList( await _unitOfWork.Categories.GetAll(), "Id", "Id","Title");
-            
+            ViewData["categories"] = new SelectList(categories.ToList(), "Id", "Name");
+
             return View();
         }
 
@@ -151,7 +152,9 @@ namespace JustBlog.Web.Areas.Blog.Controllers
             {
                 return NotFound();
             }
-            ViewData["CategoryId"] = new SelectList(_context.Categories, "Id", "Id", post.CategoryId);
+            var categories = await _unitOfWork.Categories.GetAll();
+
+            ViewData["categories"] = new SelectList(categories.ToList(), "Id", "Name");
             return View(post);
         }
 
@@ -173,6 +176,7 @@ namespace JustBlog.Web.Areas.Blog.Controllers
                 {
                     _context.Update(post);
                     await _context.SaveChangesAsync();
+
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -187,7 +191,8 @@ namespace JustBlog.Web.Areas.Blog.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CategoryId"] = new SelectList(_context.Categories, "Id", "Id", post.CategoryId);
+            var categories = await _unitOfWork.Categories.GetAll();
+            ViewData["categories"] = new SelectList(categories.ToList(), "Id", "Id", post.CategoryId);
             return View(post);
         }
 
