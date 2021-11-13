@@ -10,26 +10,24 @@ namespace JustBlog.Core.Contracts
 {
     public interface IGenericRepository<TEntity> where TEntity : class
     {
-        Task Create(TEntity entity);
+        Task<ICollection<TEntity>> GetAllAsync(
+           Expression<Func<TEntity, bool>> expression = null,
+           Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
+           Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>> include = null);
+
+        Task<TEntity> GetFirstOrDefaultAsync(Expression<Func<TEntity, bool>> expression =null,
+            Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
+            Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>> include = null);
+
+        Task<bool> IsExistsAsync(Expression<Func<TEntity, bool>> expression);
+
+        Task CreateAsync(TEntity entity);
+
         void Update(TEntity entity);
+
         void Delete(TEntity entity);
 
-        /// <summary>
-        /// Gets all entities. This method is not recommended
-        /// </summary>
-        /// <param name="filter">A function to test each element for a condition.</param>
-        /// <param name="orderBy">A function to order elements.</param>
-        /// <param name="include">A function to include navigation properties</param>
-        Task<IEnumerable<TEntity>> GetAll(
-            Expression<Func<TEntity, bool>> filter = null,
-            Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
-            Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>> includes = null
-            );
-        Task<TEntity> GetById(int id);
-        Task<TEntity> Find(
-            Expression<Func<TEntity, bool>> filter,
-            Func<IQueryable<TEntity>,
-            IIncludableQueryable<TEntity, object>> includes = null);
-        Task<bool> IsExists(Expression<Func<TEntity, bool>> filter);
+        void Delete(object id);
+
     }
 }

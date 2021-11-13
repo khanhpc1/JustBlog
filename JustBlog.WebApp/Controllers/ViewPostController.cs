@@ -30,11 +30,13 @@ namespace JustBlog.Web.Controllers
         }
         public async Task<IActionResult> Index([FromQuery(Name = "p")] int currentPage, int pageSize)
         {
-            var posts = await _unitOfWork.Posts.GetAll();
-            var postls = _mapper.Map<List<Post>, List<ListPostVM>>(posts.ToList())
+
+            var repo = await _unitOfWork.GetRepository<Post>().GetAllAsync();
+            
+            var posts = _mapper.Map<List<Post>, List<ListPostVM>>(repo.ToList())
                               .OrderByDescending(p => p.PostedOn);
 
-            var postsTotal = postls.Count();
+            var postsTotal = posts.Count();
             if (pageSize <= 0) pageSize = 5;
             int countPages = (int)Math.Ceiling((double)postsTotal / pageSize);
 
@@ -57,7 +59,7 @@ namespace JustBlog.Web.Controllers
 
             ViewBag.postIndex = (currentPage - 1) * pageSize;
 
-            var postsInPage = postls.Skip((currentPage - 1) * pageSize)
+            var postsInPage = posts.Skip((currentPage - 1) * pageSize)
                              .Take(pageSize);
 
             return View(postsInPage);
@@ -66,12 +68,13 @@ namespace JustBlog.Web.Controllers
         // GET: ViewPostController/Details/5
         public async Task<ActionResult> Details(int id)
         {
-            var isExists = await _unitOfWork.Posts.IsExists(q => q.Id == id);
+            
+            var isExists = await _unitOfWork.GetRepository<Post>().IsExistsAsync(q => q.Id == id);
             if (!isExists)
             {
                 return NotFound();
             }
-            var post = await _unitOfWork.Posts.Find(q => q.Id == id);
+            var post = await _unitOfWork.GetRepository<Post>().GetFirstOrDefaultAsync(q => q.Id == id);
             var model = _mapper.Map<Post, DetailPostVM >(post);
             return View(model);
         }

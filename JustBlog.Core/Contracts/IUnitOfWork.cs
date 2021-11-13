@@ -6,10 +6,8 @@ namespace JustBlog.Core.Contracts
 {
     public interface IUnitOfWork : IDisposable
     {
-        IGenericRepository<Category> Categories { get; }
-        IGenericRepository<Post> Posts { get; }
-        IGenericRepository<Tag> Tags { get; }
-        Task Save();
-
+        IGenericRepository<TEntity> GetRepository<TEntity>(bool hasCustomRepository = false) where TEntity : class;
+        int SaveChanges(bool ensureAutoHistory = false);
+        Task<int> SaveChangesAsync(bool ensureAutoHistory = false);
     }
 }

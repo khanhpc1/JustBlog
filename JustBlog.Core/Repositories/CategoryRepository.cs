@@ -6,75 +6,18 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace JustBlog.Core.Repositories
 {
-    public class CategoryRepository : ICategoryRepository
+    public class CategoryRepository : GenericRepository<Category>, ICategoryRepository
     {
-        private readonly JustBlogDbContext _db;
-        public CategoryRepository(JustBlogDbContext db)
+        public CategoryRepository(JustBlogDbContext context) : base(context)
         {
-            _db = db;
-        }
-        public async Task<bool> Create(Category entity)
-        {
-            await _db.Categories.AddAsync(entity);
-            return await Save();
         }
 
-        public async Task<bool> Delete(Category entity)
-        {
-            _db.Categories.Remove(entity);
-            return await Save();
-        }
-
-        public Task<bool> Delete(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public async Task<Category> Find(int id)
-        {
-            var category = await _db.Categories.FindAsync(id);
-            return category;
-        }
-
-        public async Task<ICollection<Category>> GetAll()
-        {
-            var categories = await _db.Categories.ToListAsync();
-            return categories;
-        }
-
-        public Task<ICollection<Category>> GetAll(Expression<Func<Category, bool>> expression = null, Func<IQueryable<Category>, IOrderedQueryable<Category>> orderBy = null, Func<IQueryable<Category>, IIncludableQueryable<Category, object>> includes = null)
-        {
-            throw new NotImplementedException();
-        }
-
-        public async Task<Category> GetById(int id)
-        {
-            var category = await _db.Categories.FindAsync();
-            return category;
-        }
-
-        public async Task<bool> IsExists(int id)
-        {
-            var exists = await _db.Categories.AnyAsync(c => c.Id == id);
-            return exists;
-        }
-
-        public async Task<bool> Save()
-        {
-            var changes = await _db.SaveChangesAsync();
-            return changes > 0;
-        }
-
-        public async Task<bool> Update(Category entity)
-        {
-            _db.Categories.Update(entity);
-
-            return await Save();
-        }
+       
     }
 }

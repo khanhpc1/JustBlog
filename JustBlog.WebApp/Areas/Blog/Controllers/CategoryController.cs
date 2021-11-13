@@ -33,7 +33,7 @@ namespace JustBlog.Web.Areas.Blog.Controllers
         // GET: Blog/Category
         public async Task<IActionResult> Index()
         {
-            var categories = await _unitOfWork.Categories.GetAll();
+            var categories = await _unitOfWork.GetRepository<Category>().GetAllAsync();
             var model = _mapper.Map<List<Category>, List<CategoryVM>>(categories.ToList());
             return View(model);
         }
@@ -41,13 +41,13 @@ namespace JustBlog.Web.Areas.Blog.Controllers
         // GET: Blog/Category/Details/5
         public async Task<IActionResult> Details(int id)
         {
-            var isExist = await _unitOfWork.Categories.IsExists(c => c.Id == id);
+            var isExist = await _unitOfWork.GetRepository<Category>().IsExistsAsync(c => c.Id == id);
             if (!isExist)
             {
                 return NotFound();
             }
 
-            var category = await _unitOfWork.Categories.Find(c => c.Id ==id);
+            var category = await _unitOfWork.GetRepository<Category>().GetFirstOrDefaultAsync(c => c.Id ==id);
                
             if (category == null)
             {
@@ -84,8 +84,7 @@ namespace JustBlog.Web.Areas.Blog.Controllers
                 var category = _mapper.Map<Category>(model);
                
 
-                await _unitOfWork.Categories.Create(category);
-                await _unitOfWork.Save();
+                await _unitOfWork.GetRepository<Category>().CreateAsync(category);
 
                 return RedirectToAction(nameof(Index));
             }
@@ -97,14 +96,14 @@ namespace JustBlog.Web.Areas.Blog.Controllers
         }
 
         // GET: Blog/Category/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        public async Task<IActionResult> Edit(int id)
         {
-            var isExists = await _unitOfWork.Categories.IsExists(q => q.Id == id);
+            var isExists = await _unitOfWork.GetRepository<Category>().IsExistsAsync(q => q.Id == id);
             if (!isExists)
             {
                 return NotFound();
             }
-            var category = await _unitOfWork.Categories.Find(q => q.Id == id);
+            var category = await _unitOfWork.GetRepository<Category>().GetFirstOrDefaultAsync(q => q.Id == id);
             var model = _mapper.Map<CategoryVM>(category);
             return View(model);
         }
@@ -114,7 +113,7 @@ namespace JustBlog.Web.Areas.Blog.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(CategoryVM model)
+        public IActionResult Edit(CategoryVM model)
         {
            
             try
@@ -125,8 +124,9 @@ namespace JustBlog.Web.Areas.Blog.Controllers
                     return View(model);
                 }
                 var leaveType = _mapper.Map<Category>(model);
-                _unitOfWork.Categories.Update(leaveType);
-                await _unitOfWork.Save();
+                  _unitOfWork.GetRepository<Category>().Update(leaveType);
+
+                 _unitOfWork.SaveChanges();
 
                 return RedirectToAction(nameof(Index));
             }
@@ -138,7 +138,6 @@ namespace JustBlog.Web.Areas.Blog.Controllers
            
         }
 
-
         // POST: Blog/Category/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
@@ -146,18 +145,12 @@ namespace JustBlog.Web.Areas.Blog.Controllers
         {
             try
             {
-                var category = await _unitOfWork.Categories.Find(filter: q => q.Id == id);
-                if (category == null)
-                {
-                    return NotFound();
-                }
-                _unitOfWork.Categories.Delete(category);
-                await _unitOfWork.Save();
-
+                 _unitOfWork.GetRepository<Category>().Delete(id);
+               await _unitOfWork.SaveChangesAsync();
             }
             catch
             {
-
+                return NotFound();
             }
             return RedirectToAction(nameof(Index));
         }

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace JustBlog.Core.Contracts
 {
-    public interface ITagRepository : IRepositoryBase<Tag>
+    public interface ITagRepository : IGenericRepository<Tag>
     {
         Task<Tag> GetTagByUrlSlug(string urlSlug);
     }

@@ -11,4 +11,9 @@ namespace JustBlog.ViewModels.EntityViewModels
         public string Description { get; set; }
         public ICollection<Post> Posts { get; set; }
     }
+
+    public class SidebarCategoryVM
+    {
+        public string Name { get; set; }
+    }
 }

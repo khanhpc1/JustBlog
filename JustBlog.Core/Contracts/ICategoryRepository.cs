@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace JustBlog.Core.Contracts
 {
-    public interface ICategoryRepository : IRepositoryBase<Category>
-    {
+    public interface ICategoryRepository : IGenericRepository<Category>
+    { 
     }
 }

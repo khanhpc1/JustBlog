@@ -38,10 +38,9 @@ namespace JustBlog.Web.Areas.Blog.Controllers
         // GET: Blog/Post
         public async Task<IActionResult> Index([FromQuery(Name = "p")] int currentPage, int pageSize)
         {
-            var posts = await _unitOfWork.Posts.GetAll(
-                includes: q => q.Include(x => x.Category));
-            var postls = _mapper.Map<List<Post>>(posts.ToList())
-                                        
+            var posts = await _unitOfWork.GetRepository<Post>().GetAllAsync(
+                include: p => p.Include(x => x.Category));
+            var postls = _mapper.Map<List<Post>>(posts.ToList())                                        
                                         .OrderByDescending(p => p.PostedOn);
 
             var postsTotal = postls.Count();
@@ -95,7 +94,7 @@ namespace JustBlog.Web.Areas.Blog.Controllers
         // GET: Blog/Post/Create
         public async Task<IActionResult> Create()
         {
-            var categories = await _unitOfWork.Categories.GetAll();
+            var categories = await _unitOfWork.GetRepository<Category>().GetAllAsync();
 
             ViewData["categories"] = new SelectList(categories.ToList(), "Id", "Name");
 
@@ -115,8 +114,7 @@ namespace JustBlog.Web.Areas.Blog.Controllers
                 {
                     return View(model);
                 }
-
-               
+         
                 var post = _mapper.Map<Post>(model);
                 post.PostedOn = DateTime.Now;
                 post.Modified = DateTime.Now;
@@ -126,10 +124,11 @@ namespace JustBlog.Web.Areas.Blog.Controllers
                 }
 
                 /* ViewData["CategoryId"] = new SelectList(await _unitOfWork.Categories.GetAll(), "Id", "Title", post.CategoryId);*/
-                ViewData["CategoryId"] = new SelectList(await _unitOfWork.Categories.GetAll(), "Id", "Id", post.CategoryId);
+                ViewData["CategoryId"] = new SelectList(await _unitOfWork.GetRepository<Category>().GetAllAsync(), "Id", "Id", post.CategoryId);
                 
-                await _unitOfWork.Posts.Create(post);
-                await _unitOfWork.Save();
+                await _unitOfWork.GetRepository<Post>().CreateAsync(post);
+                await _unitOfWork.SaveChangesAsync();
+               
                 return RedirectToAction(nameof(Index));
             }
             catch
@@ -147,12 +146,12 @@ namespace JustBlog.Web.Areas.Blog.Controllers
                 return NotFound();
             }
 
-            var post = await _context.Posts.FindAsync(id);
+            var post = await _unitOfWork.GetRepository<Post>().GetFirstOrDefaultAsync(p =>p.Id==id);
             if (post == null)
             {
                 return NotFound();
             }
-            var categories = await _unitOfWork.Categories.GetAll();
+            var categories = await _unitOfWork.GetRepository<Category>().GetAllAsync();
 
             ViewData["categories"] = new SelectList(categories.ToList(), "Id", "Name");
             return View(post);
@@ -163,37 +162,32 @@ namespace JustBlog.Web.Areas.Blog.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Title,UrlSlug,ShortDescription,PostContent,Published,PostedOn,Modified,CategoryId")] Post post)
+        public async Task<IActionResult> Edit(PostVM model)
         {
-            if (id != post.Id)
+            
+            try
             {
-                return NotFound();
-            }
-
-            if (ModelState.IsValid)
+                // TODO: Add update logic here
+            if (!ModelState.IsValid)
             {
-                try
-                {
-                    _context.Update(post);
-                    await _context.SaveChangesAsync();
-
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!PostExists(post.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
+                return View(model);
             }
-            var categories = await _unitOfWork.Categories.GetAll();
-            ViewData["categories"] = new SelectList(categories.ToList(), "Id", "Id", post.CategoryId);
-            return View(post);
+                var post = _mapper.Map<Post>(model);
+                _unitOfWork.GetRepository<Post>().Update(post);
+
+            var categories = await _unitOfWork.GetRepository<Category>().GetAllAsync();
+            ViewData["categories"] = new SelectList(categories.ToList(), "Id", "Id", model.CategoryId);
+
+            _unitOfWork.SaveChanges();
+
+                return RedirectToAction(nameof(Index));      
+            }
+            catch
+            {
+                ModelState.AddModelError("", "Something Went Wrong...");
+                return View(model);
+            }
+        
         }
 
         // GET: Blog/Post/Delete/5
@@ -220,9 +214,15 @@ namespace JustBlog.Web.Areas.Blog.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var post = await _context.Posts.FindAsync(id);
-            _context.Posts.Remove(post);
-            await _context.SaveChangesAsync();
+            try
+            {
+                _unitOfWork.GetRepository<Post>().Delete(id);
+                await _unitOfWork.SaveChangesAsync();
+            }
+            catch
+            {
+                return NotFound();
+            }
             return RedirectToAction(nameof(Index));
         }
 

@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace JustBlog.Core.Contracts
 {
-    public interface IPostRepository : IRepositoryBase<Post>
+    public interface IPostRepository : IGenericRepository<Post>
     {
         Task<Post> FindPost(int year, int month, string urlSlug);
         Task<ICollection<Post>> GetPublisedPosts();
