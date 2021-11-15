@@ -116,6 +116,17 @@ namespace JustBlog.Web
                     pattern: "{controller=Home}/{action=Index}/{id?}");
 
                 endpoints.MapRazorPages();
+
+                endpoints.MapControllerRoute(
+                   name: "viewpost",
+                   pattern: "Post/{year}/{month}/{title}",
+                   defaults: new
+                   {
+                       controller = "ViewPost",
+                       action = "Details"
+                   },
+                    constraints: new { year = @"\d{4}", month = @"\d{2}" }
+               );
             });
         }
     }

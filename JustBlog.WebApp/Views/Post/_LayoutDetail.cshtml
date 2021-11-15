@@ -1,0 +1,18 @@
+﻿@{
+    Layout = "/Views/Shared/_Layout.cshtml";
+}
+
+@RenderBody()
+@section Header {
+    <partial name="/Views/Post/_HeaderPartial.cshtml" />
+}
+
+@section Footer {
+    @await Html.PartialAsync("/Views/Shared/_FooterPartial.cshtml")
+}
+
+
+
+@section Scripts {
+    @RenderSection("Scripts", required: false)
+}

@@ -1,17 +1,30 @@
-﻿using JustBlog.Web.Models;
+﻿using AutoMapper;
+using JustBlog.Core;
+using JustBlog.Core.Contracts;
+using JustBlog.Models.Entities;
+using JustBlog.ViewModels.EntityViewModels;
+using JustBlog.Web.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace JustBlog.Web.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
 
-        public HomeController(ILogger<HomeController> logger)
+        private readonly IPostRepository _repo;
+        private readonly IUnitOfWork _unitOfWork;
+        private readonly IMapper _mapper;
+
+        public HomeController(JustBlogDbContext context, IPostRepository repo, IUnitOfWork unitOfWork, IMapper mapper)
         {
-            _logger = logger;
+            _repo = repo;
+            _unitOfWork = unitOfWork;
+            _mapper = mapper;
         }
 
         public IActionResult Index()
@@ -34,5 +47,7 @@ namespace JustBlog.Web.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+
+        
     }
 }

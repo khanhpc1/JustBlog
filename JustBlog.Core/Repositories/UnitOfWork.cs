@@ -15,12 +15,16 @@ namespace JustBlog.Core.Repositories
         private readonly JustBlogDbContext _context;
         private Dictionary<Type, object> repositories;
 
+        private ICategoryRepository _categoryRepository;
+        private ITagRepository _tagrepository;
+        private IPostRepository _postRepository;
+
         public UnitOfWork(JustBlogDbContext context)
         {
             _context = context ?? throw new ArgumentNullException(nameof(context));
         }
 
-        public IGenericRepository<TEntity> GetRepository<TEntity>(bool hasCustomRepository = false) where TEntity : class
+        public IGenericRepository<TEntity> GetRepository<TEntity>(bool hasCustomRepository =false) where TEntity : class
         {
             if (repositories == null)
             {
@@ -45,6 +49,56 @@ namespace JustBlog.Core.Repositories
 
             return (IGenericRepository<TEntity>)repositories[type];
         }
+
+
+        public ICategoryRepository CategoryRepository
+        {
+            get
+            {
+                if (_categoryRepository == null)
+                {
+                    _postRepository = new PostRepository(_context);
+                }
+                return _categoryRepository;
+            }
+        }
+
+        public IPostRepository PostRepository
+        {
+            get
+            {
+                if (_postRepository == null)
+                {
+                    _postRepository = new PostRepository(_context);
+                }
+                return _postRepository;
+            }
+        }
+
+        public ITagRepository TagRepository
+        {
+            get
+            {
+                if (_tagrepository == null)
+                {
+                    _tagrepository = new TagRepository(_context);
+                }
+                return _tagrepository;
+            }
+        }
+
+        public JustBlogDbContext Context => _context;
+
+        public int SaveChanges()
+        {
+            return _context.SaveChanges();
+        }
+
+        public async Task<int> SaveChangesAsync()
+        {
+            return await _context.SaveChangesAsync();
+        }
+
 
         public async Task<int> SaveChangesAsync(bool ensureAutoHistory = false)
         {

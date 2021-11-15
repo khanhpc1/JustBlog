@@ -1,5 +1,6 @@
 ﻿using JustBlog.Models.Entities;
 using System;
+using System.Collections.Generic;
 
 namespace JustBlog.ViewModels.EntityViewModels
 {
@@ -17,12 +18,18 @@ namespace JustBlog.ViewModels.EntityViewModels
 
         public int CategoryId { get; set; }
         public Category Category { get; set; }
+
+        public List<PostTagMap> PostTagMaps { get; set; }
+
+        public int[] TagIds { get; set; }
     }
 
     public class ListPostVM
     {
         public int Id { get; set; }
         public string Title { get; set; }
+
+        public string UrlSlug { get; set; }
         public string ShortDescription { get; set; }
         public DateTime PostedOn { get; set; }
     }
@@ -36,4 +43,11 @@ namespace JustBlog.ViewModels.EntityViewModels
         public DateTime PostedOn { get; set; }
     }
 
+    public class LastestPostVM
+    {
+        public int Id { get; set; }
+        public string Title { get; set; }
+        public DateTime PostedOn { get; set; }
+
+    }
 }

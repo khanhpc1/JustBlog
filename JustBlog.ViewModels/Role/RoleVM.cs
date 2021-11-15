@@ -47,7 +47,4 @@ namespace JustBlog.ViewModels.Role
         public IdentityRole Role { get; set; }
     }
 
-
-
-
 }

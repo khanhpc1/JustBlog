@@ -29,8 +29,8 @@ namespace JustBlog.Core.Repositories
 
         public async Task<Post> FindPost(int year, int month, string urlSlug)
         {
-            var posts = await GetAllAsync();
-            return (Post)posts.Where(q => q.PostedOn.Year == year && q.PostedOn.Month == month && q.UrlSlug == urlSlug);           
+            var post = await GetFirstOrDefaultAsync(q => q.PostedOn.Year == year && q.PostedOn.Month == month && q.UrlSlug == urlSlug);
+            return post;          
         }
         
 

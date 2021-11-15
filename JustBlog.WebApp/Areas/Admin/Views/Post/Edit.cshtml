@@ -1,0 +1,78 @@
+﻿@model JustBlog.ViewModels.EntityViewModels.PostVM
+
+@{ ViewData["Title"] = "Edit";
+    var list = ViewData["categories"] as SelectList;
+    var listTag = ViewData["tags"] as MultiSelectList; }
+
+<h1>Edit Post</h1>
+
+<hr />
+<div class="row">
+    <div class="col-md-8">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            <div class="form-group">
+                <label asp-for="CategoryId" class="control-label">Category</label>
+                <select asp-for="CategoryId" class="form-control" asp-items="list"></select>
+                <span asp-validation-for="CategoryId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Title" class="control-label"></label>
+                <textarea cols="2" asp-for="Title" class="form-control"></textarea>
+                <span asp-validation-for="Title" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="UrlSlug" class="control-label"></label>
+                <input asp-for="UrlSlug" class="form-control" />
+                <span asp-validation-for="UrlSlug" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ShortDescription" class="control-label"></label>
+                <textarea id="editor" cols="4" asp-for="ShortDescription" class="form-control"></textarea>
+                <span asp-validation-for="ShortDescription" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PostContent" class="control-label"></label>
+                <textarea id="editor" cols="4" asp-for="PostContent" class="form-control"></textarea>
+                <span asp-validation-for="PostContent" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="Published" /> @Html.DisplayNameFor(model => model.Published)
+                </label>
+            </div>
+            <div class="form-group">
+                <label asp-for="TagIds" class="control-label">Tag</label>
+                <select asp-for="TagIds" class="form-control" asp-items="listTag"></select>
+                <span asp-validation-for="TagIds" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+@section Scripts
+{
+    @await Html.PartialAsync("_Ckeditor5")
+    <script src="~/lib/multiple-select/multiple-select.min.js"></script>
+    <link rel="stylesheet" href="~/lib/multiple-select/multiple-select.min.css" />
+
+    <script>
+        $("#CategoryIDs").multipleSelect({
+            selectAll: false,
+            keepOpen: false,
+            isOpen: false,
+        });
+    </script>
+
+    <partial name="_ValidationScriptsPartial" />
+}
+
+

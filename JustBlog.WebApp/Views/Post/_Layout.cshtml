@@ -1,0 +1,26 @@
+﻿@{
+    Layout = "/Views/Shared/_Layout.cshtml";
+}
+
+@RenderBody()
+
+@section Header {
+    @await Html.PartialAsync("/Views/Shared/_HeaderPartial.cshtml")
+}
+
+
+@section Footer {
+    @await Html.PartialAsync("/Views/Shared/_FooterPartial.cshtml")
+}
+
+@section AboutCard {
+    @await Html.PartialAsync("/Views/Shared/_PartialAboutCard.cshtml")
+}
+
+@*@section LastestPost {
+    @await Html.PartialAsync("/Views/Home/LatestPosts.cshtml")
+}*@
+
+@section Scripts {
+    @RenderSection("Scripts", required: false)
+}

@@ -1,0 +1,8 @@
+﻿
+    <script src="@Url.Content("~/ckeditor5/ckeditor.js")"></script>
+    <script>
+        var allEditors = document.querySelectorAll('#editor');
+        for (var i = 0; i < allEditors.length; ++i) {
+            ClassicEditor.create(allEditors[i]);
+        }
+    </script>

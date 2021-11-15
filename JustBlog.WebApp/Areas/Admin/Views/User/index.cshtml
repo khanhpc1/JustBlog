@@ -5,15 +5,18 @@
 <h1>@ViewData["Title"]</h1>
 @*<partial name="_StatusMessage" />*@
 <p>Number of member: @Model.TotalUsers</p>
-<table class="table">
+<table id="tbtable" class="table">
     <tr>
+        <th></th>
         <th>User Name</th>
         <th>Role</th>
         <th>Action</th>
+        
     </tr>
     @foreach (var user in Model.Users)
     {
-        <tr> 
+        <tr>
+            <td>@(++ViewBag.userIndex)</td>
             <td>@user.UserName</td>
             <td>
                 @if (string.IsNullOrEmpty(user.RoleNames))
@@ -31,4 +34,17 @@
         </tr>
     }
 </table>
-<partial name="_Paging" model="@ViewBag.pagingModel" />
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $('#tbdata').DataTable();
+        })
+
+        $('#tbdata').dataTable({
+            "paging": false
+        });
+    </script>
+}
+
+    <partial name="_Paging" model="@ViewBag.pagingModel" />

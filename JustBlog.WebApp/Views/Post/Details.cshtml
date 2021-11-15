@@ -1,0 +1,7 @@
+﻿@model JustBlog.ViewModels.EntityViewModels.DetailPostVM
+@{ ViewData["Title"] = "Details";
+                Layout = "_LayoutDetail";
+ }
+
+<!-- Post Content-->
+                @Html.Raw(Model.PostContent)

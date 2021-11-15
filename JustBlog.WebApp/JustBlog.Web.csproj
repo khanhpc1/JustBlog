@@ -2,16 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
-    <UserSecretsId>aspnet-JustBlog.WebApp-18688444-96D8-4CBE-8AB6-F8072F81B7BF</UserSecretsId>
-    <CopyRefAssembliesToPublishDirectory>false</CopyRefAssembliesToPublishDirectory>
   </PropertyGroup>
-
-  <ItemGroup>
-    <Compile Remove="Areas\Blog\Models\**" />
-    <Content Remove="Areas\Blog\Models\**" />
-    <EmbeddedResource Remove="Areas\Blog\Models\**" />
-    <None Remove="Areas\Blog\Models\**" />
-  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="10.1.1" />
@@ -40,29 +31,6 @@
   <ItemGroup>
     <Folder Include="Areas\Admin\Models\" />
     <Folder Include="mailssave\" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Include="wwwroot\summernote\.github\CODE_OF_CONDUCT.md" />
-    <None Include="wwwroot\summernote\.github\CONTRIBUTING.md" />
-    <None Include="wwwroot\summernote\.github\FUNDING.yml" />
-    <None Include="wwwroot\summernote\.github\ISSUE_TEMPLATE.md" />
-    <None Include="wwwroot\summernote\.github\PULL_REQUEST_TEMPLATE.md" />
-    <None Include="wwwroot\summernote\.github\workflows\codeql-analysis.yml" />
-    <None Include="wwwroot\summernote\.husky\.gitignore" />
-    <None Include="wwwroot\summernote\.husky\pre-commit" />
-    <None Include="wwwroot\summernote\.husky\pre-push" />
-    <None Include="wwwroot\summernote\.karma\config.js" />
-    <None Include="wwwroot\summernote\.karma\debug.js" />
-    <None Include="wwwroot\summernote\.karma\saucelabs.js" />
-    <None Include="wwwroot\summernote\.karma\travis.js" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Content Update="Areas\Blog\Views\Post\_ViewImports.cshtml">
-      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
-      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-    </Content>
   </ItemGroup>
 
 </Project>

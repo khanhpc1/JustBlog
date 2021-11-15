@@ -13,6 +13,7 @@ namespace JustBlog.Web.Mappings
 
             CreateMap<Post, PostVM>().ReverseMap();
             CreateMap<Post, ListPostVM>().ReverseMap();
+            CreateMap<Post, LastestPostVM>().ReverseMap();
             CreateMap<Post, DetailPostVM>().ReverseMap();
 
             CreateMap<Tag, TagVM>().ReverseMap(); 
