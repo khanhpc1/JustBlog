@@ -2,19 +2,25 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 
-[ViewComponent]
-public class CategorySidebar : ViewComponent
+namespace JustBlog.Web.Views.Shared.Components.CategorySidebar
 {
-    public class CategorySidebarData
+    [ViewComponent]
+    public class CategorySidebar : ViewComponent
     {
-        public List<Category> categories { set; get; }
-   
-    } 
+        public class CategorySidebarData
+        {
+            public List<Category> Categories { set; get; }
+            public string UrlSlugCategory { set; get; }
+        }
 
-    public const string COMPONENTNAME = "CategorySidebar";
-    public CategorySidebar() { }
-    public IViewComponentResult Invoke(CategorySidebarData data)
-    {
-        return View(data);
+        public const string COMPONENTNAME = "CategorySidebar";
+
+        public CategorySidebar()
+        { }
+
+        public IViewComponentResult Invoke(CategorySidebarData data)
+        {
+            return View(data);
+        }
     }
 }

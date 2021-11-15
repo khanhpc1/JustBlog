@@ -32,6 +32,10 @@ namespace JustBlog.ViewModels.EntityViewModels
         public string UrlSlug { get; set; }
         public string ShortDescription { get; set; }
         public DateTime PostedOn { get; set; }
+
+        public Category Category { get; set; }
+
+        public List<PostTagMap> PostTagMaps { get; set; } 
     }
 
     public class DetailPostVM

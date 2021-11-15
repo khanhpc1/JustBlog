@@ -46,7 +46,7 @@
         @Html.DisplayFor(modelItem => item.UrlSlug)
     </td>
     <td>
-        @Html.DisplayFor(modelItem => item.ShortDescription)
+        @Html.Raw(@item.ShortDescription)
     </td>
 
     <td>

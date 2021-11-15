@@ -12,10 +12,12 @@ using AutoMapper;
 using JustBlog.ViewModels.EntityViewModels;
 using JustBlog.Web.Helpers;
 using App.Utilities;
+using Microsoft.AspNetCore.Authorization;
 
 namespace JustBlog.Web.Areas.Blog.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = "Admin,Contributor")]
     [Route("blog/category/[action]/{id?}")]
     public class CategoryController : Controller
     {

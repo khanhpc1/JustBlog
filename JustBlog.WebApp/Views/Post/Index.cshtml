@@ -1,29 +1,39 @@
-﻿@model IEnumerable<JustBlog.ViewModels.EntityViewModels.ListPostVM>
+﻿@using JustBlog.Web.Views.Shared.Components.CategorySidebar
 
-@{
-    ViewData["Title"] = "Index";
-    Layout = "_Layout";
-}
-            @foreach (var item in Model)
-            {
-                
-                <!-- Post preview-->
-            <div class="post-preview">
-                <a asp-action="Details" asp-route-year="@item.PostedOn.Year"
-                   asp-route-month="@item.PostedOn.Month" asp-route-urlSlug="@item.UrlSlug">
+@model IEnumerable<JustBlog.ViewModels.EntityViewModels.ListPostVM>
+
+@{ ViewData["Title"] = "Index";
+    Layout = "_Layout"; }
+@foreach (var item in Model)
+{<!-- Post preview-->
+        <div class="post-preview">
+            <a asp-action="Details" asp-route-year="@item.PostedOn.Year"
+                asp-route-month="@item.PostedOn.Month" asp-route-urlSlug="@item.UrlSlug">
                 <h2 class="post-title">
                     @Html.DisplayFor(modelItem => item.Title)
-                </h2></a>
-                <p class="post-meta">
-                    Posted by
-                    <a href="#!">Start Bootstrap</a>
-                    @Html.DisplayFor(modelItem => item.PostedOn)
-                </p>
-                <p class="post-meta">
-                    @Html.Raw(item.ShortDescription)
-                </p>
-            </div>
-                <hr class="my-4" />
-            }
-            <partial name="_paging" model="@ViewBag.pagingModel" />
-            <!-- Pager-->
+                </h2>
+            </a>
+            <p class="post-meta">
+                Posted by
+                <a href="#!">Start Bootstrap</a>
+                @Html.DisplayFor(modelItem => item.PostedOn)
+            </p>
+            <p class="post-meta">
+                @Html.Raw(item.ShortDescription)
+            </p>
+        </div>
+        <hr class="my-4" />
+        <div>Category @Html.DisplayFor(modeltem => item.Category.Name)</div>
+        <div>Tag  @string.Join(", ", item.PostTagMaps.Select(pt => pt.Tag.Name))</div>
+}
+<partial name="_paging" model="@ViewBag.pagingModel" />
+<!-- Pager-->
+@section CategorySidebar {
+    @{
+        @await Component.InvokeAsync(CategorySidebar.COMPONENTNAME,
+            new CategorySidebar.CategorySidebarData()
+            {
+                Categories = ViewBag.categories
+            }); 
+        }
+}

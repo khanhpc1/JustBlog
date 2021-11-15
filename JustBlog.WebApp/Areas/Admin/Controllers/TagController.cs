@@ -12,9 +12,11 @@ using AutoMapper;
 using JustBlog.ViewModels.EntityViewModels;
 using JustBlog.Web.Helpers;
 using App.Utilities;
+using Microsoft.AspNetCore.Authorization;
 
 namespace JustBlog.Web.Areas.Blog.Controllers
 {
+    [Authorize(Roles = "Admin,Contributor")]
     [Area("Admin")]
     [Route("blog/tag/[action]/{id?}")]
     public class TagController : Controller

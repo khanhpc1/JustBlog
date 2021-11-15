@@ -18,8 +18,13 @@
 }
 
 @*@section LastestPost {
-    @await Html.PartialAsync("/Views/Home/LatestPosts.cshtml")
-}*@
+        @await Html.PartialAsync("/Views/Home/LatestPosts.cshtml")
+    }*@
+
+@section CategorySideBar {
+    @RenderSection("CategorySideBar", false)
+}
+
 
 @section Scripts {
     @RenderSection("Scripts", required: false)

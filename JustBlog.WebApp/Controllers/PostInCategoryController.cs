@@ -29,13 +29,11 @@ namespace JustBlog.Web.Controllers
             return View();
         }
 
-        public async Task<IActionResult> PostList(int id) 
+      /*  public async Task<IActionResult> PostList(int id) 
         {
            
-
-           
             return View();
-        }
+        }*/
 
         // GET: PostInCategoryController/Details/5
         public ActionResult Details(int id)

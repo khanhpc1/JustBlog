@@ -1,0 +1,20 @@
+﻿@using  JustBlog.Web.Views.Shared.Components.CategorySidebar
+@using JustBlog.Models.Entities
+
+@model CategorySidebar.CategorySidebarData
+@{
+    List<Category> categories = Model.Categories;
+}
+@if (categories.Count > 0)
+{
+    @foreach (var item in categories)
+    {
+        var cssClass = (item.UrlSlug == Model.UrlSlugCategory) ? "active" : null;
+        <li class="nav-item @cssClass">
+            <a class="nav-link"
+               asp-controller="Post" asp-action="PostByCategory" asp-route-slug="@item.UrlSlug">
+                @item.Name
+            </a>
+        </li>
+    }
+}
